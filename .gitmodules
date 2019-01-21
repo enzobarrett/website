@@ -1,0 +1,3 @@
+[submodule "photo"]
+	path = photo
+	url = git@github.com:enzobarrett/photos.git
