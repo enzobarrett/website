@@ -1,6 +1,3 @@
 .gist .markdown-body {
     font-size:18px;
 }
-.gist .markdown-body .highlight pre, .gist .markdown-body pre {
-    font-size: 110%;
-}
