@@ -38,7 +38,7 @@ h1.title {
     width: 70%;
 }
 #content {
-    width: 75%;
+    width: 74%;
     float:left;
 }
 #sidebar {
@@ -50,6 +50,7 @@ h1.title {
 .gist {
     border: 1px solid black;
     border-radius: 5px;
+    margin-bottom:30px;
 }
 
 /*!
@@ -177,3 +178,12 @@ h1.title {
   transform: rotate(-45deg);
 }
 
+.inner {
+    margin: 10px;
+}
+h2 {
+    margin:0;
+    border-bottom: 1px solid #eaecef;
+    margin-bottom: 16px;
+    padding-bottom:10px;
+}
