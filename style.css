@@ -1,3 +1,6 @@
+#t {
+    width:150px;
+}
 ul {
     list-style-type: none;
 }
@@ -7,7 +10,7 @@ p {
     font-weight: normal;
     margin: 5px;
 }
-img {
+img.icon {
     height: 32px;
     width: auto;
 }
@@ -186,4 +189,8 @@ h2 {
     border-bottom: 1px solid #eaecef;
     margin-bottom: 16px;
     padding-bottom:10px;
+}
+code {
+  background-color: rgba(27,31,35,.05);
+  padding: .2em .4em;
 }
