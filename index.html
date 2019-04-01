@@ -1,16 +1,172 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="style.css">
     <link href="https://fonts.googleapis.com/css?family=Charm" rel="stylesheet">
     <title>Enzo's Homepage</title>
+    <script>
+	/*!
+	 * Fairy Dust Cursor.js
+	 * - 90's cursors collection
+	 * -- https://github.com/tholman/90s-cursor-effects
+	 * -- https://codepen.io/tholman/full/jWmZxZ/
+	 */
+
+	(function fairyDustCursor() {
+	  
+	  var possibleColors = ["#D61C59", "#E7D84B", "#1B8798"]
+	  var width = window.innerWidth;
+	  var height = window.innerHeight;
+	  var cursor = {x: width/2, y: width/2};
+	  var particles = [];
+	  
+	  function init() {
+	    bindEvents();
+	    loop();
+	  }
+	  
+	  // Bind events that are needed
+	  function bindEvents() {
+	    document.addEventListener('mousemove', onMouseMove);
+	    document.addEventListener('touchmove', onTouchMove);
+	    document.addEventListener('touchstart', onTouchMove);
+	    
+	    window.addEventListener('resize', onWindowResize);
+	  }
+	  
+	  function onWindowResize(e) {
+	    width = window.innerWidth;
+	    height = window.innerHeight;
+	  }
+	  
+	  function onTouchMove(e) {
+	    if( e.touches.length > 0 ) {
+	      for( var i = 0; i < e.touches.length; i++ ) {
+		addParticle( e.touches[i].clientX, e.touches[i].clientY, possibleColors[Math.floor(Math.random()*possibleColors.length)]);
+	      }
+	    }
+	  }
+	  
+	  function onMouseMove(e) {    
+	    cursor.x = e.clientX;
+	    cursor.y = e.clientY;
+	    
+	    addParticle( cursor.x, cursor.y, possibleColors[Math.floor(Math.random()*possibleColors.length)]);
+	  }
+	  
+	  function addParticle(x, y, color) {
+	    var particle = new Particle();
+	    particle.init(x, y, color);
+	    particles.push(particle);
+	  }
+	  
+	  function updateParticles() {
+	    
+	    // Updated
+	    for( var i = 0; i < particles.length; i++ ) {
+	      particles[i].update();
+	    }
+	    
+	    // Remove dead particles
+	    for( var i = particles.length -1; i >= 0; i-- ) {
+	      if( particles[i].lifeSpan < 0 ) {
+		particles[i].die();
+		particles.splice(i, 1);
+	      }
+	    }
+	    
+	  }
+	  
+	  function loop() {
+	    requestAnimationFrame(loop);
+	    updateParticles();
+	  }
+	  
+	  /**
+	   * Particles
+	   */
+	  
+	  function Particle() {
+
+	    this.character = "*";
+	    this.lifeSpan = 120; //ms
+	    this.initialStyles ={
+	      "position": "absolute",
+	      "display": "block",
+	      "pointerEvents": "none",
+	      "z-index": "10000000",
+	      "fontSize": "16px",
+	      "will-change": "transform"
+	    };
+
+	    // Init, and set properties
+	    this.init = function(x, y, color) {
+
+	      this.velocity = {
+		x:  (Math.random() < 0.5 ? -1 : 1) * (Math.random() / 2),
+		y: 1
+	      };
+	      
+	      this.position = {x: x - 10, y: y - 20};
+	      this.initialStyles.color = color;
+
+	      this.element = document.createElement('span');
+	      this.element.innerHTML = this.character;
+	      applyProperties(this.element, this.initialStyles);
+	      this.update();
+	      
+	      document.querySelector('.container').appendChild(this.element);
+	    };
+	    
+	    this.update = function() {
+	      this.position.x += this.velocity.x;
+	      this.position.y += this.velocity.y;
+	      this.lifeSpan--;
+	      
+	      this.element.style.transform = "translate3d(" + this.position.x + "px," + this.position.y + "px, 0) scale(" + (this.lifeSpan / 120) + ")";
+	    }
+	    
+	    this.die = function() {
+	      this.element.parentNode.removeChild(this.element);
+	    }
+	    
+	  }
+	  
+	  /**
+	   * Utils
+	   */
+	  
+	  // Applies css `properties` to an element.
+	  function applyProperties( target, properties ) {
+	    for( var key in properties ) {
+	      target.style[ key ] = properties[ key ];
+	    }
+	  }
+	  
+	  init();
+	})();
+    </script>
 </head>
-<body onload="go()">
+<body>
     <h1 class="title">enzob.xyz</h1>
     <h1 class="wel">Welcome to my site!</h1>
     <a class="github-fork-ribbon right-top" href="https://github.com/enzobarrett" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
     <div id=main-content>
     <div id="content">
+    <div id="t" class="gist">
+	<div class="inner">
+	    <h2>t, twitter from the terminal</h2>
+	    <img id="t" src="t.png" alt="">
+	    <p>
+	    I recently discovered an intresting application for interacting with twitter from the terminal. It is a pain to setup because of twitters api process but other than that works almost perfectly. 
+	    </p>
+	    <h3>How to setup t</h3>
+	    <p>
+	    First off you need to install ruby, on Arch Linux do <code>sudo pacman -S ruby</code>. Next you need to setup a twitter app, check out this link, <a href="https://docs.ultimatemember.com/article/140-twitter-app-setup">here</a>
+	    </p>
+	</div>
+    </div>
     <div id="emulator" class="gist">
 	<div class="inner">
 	    <h2>ZX Spectrum emulator from the Hanselminutes podcast</h2>
@@ -34,19 +190,19 @@
 	<h2>
 	<ul>
 	    <li>
-		<img src="git.png" alt="Github">
+		<img class="icon" src="git.png" alt="Github">
 		<a href="https://github.com/enzobarrett">Github</a>
 	    </li>
 	    <li>
-		<img src="cam.png" alt="Camera">
+		<img class="icon" src="cam.png" alt="Camera">
 		<a href="https://photo.enzob.xyz">Photography</a>
 	    </li>
 	    <li>
-		<img src="gmail.png" alt="Gmail">
+		<img class="icon" src="gmail.png" alt="Gmail">
 		<a href="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&to=enzobarrett@gmail.com">Email Me</a>
 	    </li>
 	    <li>
-		<img class="500" src="500.png" alt="500px">
+		<img class="500 icon" src="500.png" alt="500px">
 		<a href="https://500px.com/enzobarrett">Photos</a>
 	    </li>
 	</ul>
